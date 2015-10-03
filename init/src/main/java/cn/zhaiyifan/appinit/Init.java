@@ -57,6 +57,13 @@ public class Init {
     }
 
     /**
+     * start flow.
+     */
+    public static void start(Flow flow) {
+        flow.start();
+    }
+
+    /**
      * Not quite sure when we need this...
      *
      * @param flowName flow key, should be unique for each flow.

@@ -79,10 +79,50 @@ As for task, they can be divided into two types
 - asynchronous task chain, like the two red tasks.
 
 # Usage
-Not completed yet. Pending.
+
+```java
+public class DemoApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // The library needs application context to get process information.
+        Init.init(this);
+        // Init.init(this, logProxy) enables custom log component
+        
+        Task task1 = new Task("task1") {
+
+            @Override
+            protected void start() {
+                doSomeThing();
+            }
+        };
+        
+        // Create a task which is not blocked with 300 milliseconds delay.
+        Task task2 = new Task("task2", false, 300) {
+
+            @Override
+            protected void start() {
+                doSomeThing();
+            }
+        };
+
+        // Create more tasks named task3, task4, etc.
+        
+        Flow flow = new Flow("flow");
+        flow.addTask(1, task1).addTask(1, task2).addTask(2, task3).addTask(2, task4);
+
+        Init.addFlow(flow);
+        Init.start(flow);
+    }
+```
+
+See demo project for more details.
 
 # Roadmap
-- 1.0 October A workable solution to principles mentioned above
+- 1.0 *October - A workable solution to principles mentioned above* DONE
+- 1.1 **In this year - Support more complex init flow** WIP
 - 2.0 Ability to reverse initialization code using this library to flow picture.
 
 # Contribute

@@ -68,13 +68,13 @@ public class DemoApplication extends Application {
             }
         };
 
-        Flow flow = Init.getFlow("flow");
+        Flow flow = new Flow("flow");
         flow.addTask(1, task1)
                 .addTask(1, task2)
                 .addTask(2, task3)
                 .addTask(2, task4);
 
         Init.addFlow(flow);
-        Init.start("flow");
+        Init.start(flow);
     }
 }
