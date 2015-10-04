@@ -46,11 +46,21 @@ public class DemoApplication extends Application {
         
         // 创建一个有名flow
         Flow flow = new Flow("flow");
-        // 往flow添加刚才创建的task
+        // 往flow添加刚才创建的task, 第一个参数是wave序号，会从小到大执行每个wave的task
         flow.addTask(1, task1).addTask(1, task2).addTask(2, task3).addTask(2, task4);
         // 启动flow，开始初始化
         Init.start(flow);
     }
+```
+
+看一下log，可以发现原来一个串行执行需要2700毫秒的任务，在我们的安排下，现在只需要1307毫秒就可以结束。
+```log
+10-04 18:53:54.789 646-666/cn.zhaiyifan.init I/Task: task2 runs 500
+10-04 18:53:55.289 646-665/cn.zhaiyifan.init I/Task: task1 runs 1000
+10-04 18:53:55.591 646-741/cn.zhaiyifan.init I/Task: task3 runs 300
+10-04 18:53:55.592 646-646/cn.zhaiyifan.init I/Flow: flow runs 1307
+10-04 18:53:55.990 646-740/cn.zhaiyifan.init I/Task: task4 runs 700
+10-04 18:53:56.191 646-783/cn.zhaiyifan.init I/Task: task5 runs 200
 ```
 
 更多详情请见demo工程。

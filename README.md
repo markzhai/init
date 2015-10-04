@@ -50,14 +50,27 @@ public class DemoApplication extends Application {
         task5.setParentTask(task4);
 
         Flow flow = new Flow("flow");
+        // Add task1 and task2 to wave1
         flow.addTask(1, task1)
                 .addTask(1, task2)
+                // Add task3 and task4 to wave2
                 .addTask(2, task3)
                 .addTask(2, task4)
+                // Add task5 and task4 to wave3, task5 can be started only after task4 finished
                 .addTask(3, task5);
 
         Init.start(flow);
     }
+```
+
+Let's have a look at log, we can see that the initialization which may take up to 2700ms only run 1307ms now.
+```log
+10-04 18:53:54.789 646-666/cn.zhaiyifan.init I/Task: task2 runs 500
+10-04 18:53:55.289 646-665/cn.zhaiyifan.init I/Task: task1 runs 1000
+10-04 18:53:55.591 646-741/cn.zhaiyifan.init I/Task: task3 runs 300
+10-04 18:53:55.592 646-646/cn.zhaiyifan.init I/Flow: flow runs 1307
+10-04 18:53:55.990 646-740/cn.zhaiyifan.init I/Task: task4 runs 700
+10-04 18:53:56.191 646-783/cn.zhaiyifan.init I/Task: task5 runs 200
 ```
 
 See demo project for more details.
