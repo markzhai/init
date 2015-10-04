@@ -14,27 +14,55 @@ public abstract class Task implements Runnable {
     private CountDownLatch mDoneSignal;
     private boolean mIsBlocked = true;
     private long mDelay = 0;
+    private int mStatus = Status.STATUS_PENDING_START;
 
+    /**
+     * Constructor
+     *
+     * @param name task name
+     */
     public Task(String name) {
         mTaskName = name;
     }
 
+    /**
+     * Constructor
+     *
+     * @param name  task name
+     * @param delay task delay
+     */
     public Task(String name, long delay) {
         mTaskName = name;
         mDelay = delay;
     }
 
+    /**
+     * Constructor
+     *
+     * @param name      task name
+     * @param isBlocked if task is blocked
+     */
     public Task(String name, boolean isBlocked) {
         mTaskName = name;
         mIsBlocked = isBlocked;
     }
 
+    /**
+     * Constructor
+     *
+     * @param name      task name
+     * @param isBlocked if task is blocked
+     * @param delay     task delay
+     */
     public Task(String name, boolean isBlocked, long delay) {
         mTaskName = name;
         mIsBlocked = isBlocked;
         mDelay = delay;
     }
 
+    /**
+     * Normally should not override it
+     */
     @Override
     public void run() {
         if (mDelay > 0) {
@@ -44,6 +72,7 @@ public abstract class Task implements Runnable {
                 LogImpl.w(TAG, getName() + ": " + e.getMessage());
             }
         }
+        mStatus = Status.STATUS_EXECUTING;
 
         long startTime = System.currentTimeMillis();
 
@@ -55,6 +84,7 @@ public abstract class Task implements Runnable {
         if (mDoneSignal != null) {
             mDoneSignal.countDown();
         }
+        mStatus = Status.STATUS_DONE;
     }
 
     /**
@@ -83,6 +113,15 @@ public abstract class Task implements Runnable {
      */
     public long getDelay() {
         return mDelay;
+    }
+
+    /**
+     * Get task status
+     *
+     * @return status
+     */
+    public int getStatus() {
+        return mStatus;
     }
 
     /**

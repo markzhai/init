@@ -20,7 +20,7 @@ public class Flow {
     private static final long DEFAULT_FLOW_TIMEOUT = 3000;
 
     private SparseArray<Wave> mWaveArray;
-    private Map<String, Integer> mTaskStatusMap;
+    private Map<String, Integer> mTaskToWaveMap;
 
     private int mFlowStatus = Status.STATUS_UNKNOWN;
 
@@ -37,7 +37,7 @@ public class Flow {
         mFlowStatus = Status.STATUS_PENDING_START;
 
         mWaveArray = new SparseArray<>();
-        mTaskStatusMap = new HashMap<>();
+        mTaskToWaveMap = new HashMap<>();
     }
 
     /**
@@ -55,6 +55,7 @@ public class Flow {
                 mWaveArray.put(waveSeq, wave);
             }
             wave.addTask(task);
+            mTaskToWaveMap.put(task.getName(), waveSeq);
         }
         return this;
     }
@@ -122,8 +123,13 @@ public class Flow {
      * @return status
      */
     public int getTaskStatus(String taskName) {
-        Integer status = mTaskStatusMap.get(taskName);
-        return status != null ? status : Status.STATUS_UNKNOWN;
+        Integer waveSeq = mTaskToWaveMap.get(taskName);
+        Wave wave = mWaveArray.get(waveSeq);
+        if (wave != null) {
+            return wave.getTaskStatus(taskName);
+        } else {
+            return Status.STATUS_UNKNOWN;
+        }
     }
 
     /**

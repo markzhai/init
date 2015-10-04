@@ -5,7 +5,7 @@ multi-process, tidy magic code for every process, and improves efficiency of app
 It is originally designed for application initialization, but not confined to that, it can be
 applied to any complex initialization procedure.
 
-([For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md))
+[For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md)
 
 # Usage
 

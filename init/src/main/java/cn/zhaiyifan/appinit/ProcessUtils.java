@@ -6,7 +6,6 @@ import android.content.Context;
 import java.util.List;
 
 class ProcessUtils {
-    public static boolean isValidProcessName = false;
     private static volatile String sProcessName;
     private final static Object sNameLock = new Object();
 
@@ -38,9 +37,6 @@ class ProcessUtils {
                 return false;
             }
             Context context = Init.getContext();
-            if (processName.length() < 5 || context.getApplicationInfo().processName.length() < 5) {
-                isValidProcessName = true;
-            }
             sMainProcess = processName.equals(context.getApplicationInfo().processName);
             return sMainProcess;
         }

@@ -11,23 +11,21 @@ import java.util.concurrent.TimeUnit;
  * <h1>A wave is made up of several tasks.</h1>
  * Created by mark.zhai on 2015/10/2.
  */
-class Wave {
-
+public class Wave {
     private static final String TAG = "Wave";
     private static final long DEFAULT_WAVE_TIMEOUT = 1500;
-
-
-    private long mTimeout = DEFAULT_WAVE_TIMEOUT;
 
     private List<Task> mTaskList = new LinkedList<>();
 
     private String mProcessName;
-
     private int mSequence;
+    private long mTimeout = DEFAULT_WAVE_TIMEOUT;
+    private int mStatus = Status.STATUS_UNKNOWN;
 
     public Wave(int sequence, String processName) {
-        this.mSequence = sequence;
-        this.mProcessName = processName;
+        mSequence = sequence;
+        mProcessName = processName;
+        mStatus = Status.STATUS_PENDING_START;
     }
 
     /**
@@ -36,6 +34,30 @@ class Wave {
     public Wave addTask(Task task) {
         mTaskList.add(task);
         return this;
+    }
+
+    /**
+     * Get wave status.
+     *
+     * @return status
+     */
+    public int getStatus() {
+        return mStatus;
+    }
+
+    /**
+     * Get task status.
+     *
+     * @param taskName task name
+     * @return status
+     */
+    public int getTaskStatus(String taskName) {
+        for (Task task : mTaskList) {
+            if (task.getName().equals(taskName)) {
+                return task.getStatus();
+            }
+        }
+        return Status.STATUS_UNKNOWN;
     }
 
     /**
@@ -49,10 +71,8 @@ class Wave {
     }
 
     public void start() {
-
+        mStatus = Status.STATUS_EXECUTING;
         List<Task> blockTaskList = new LinkedList<>();
-
-
         ExecutorService threadPool = Executors.newCachedThreadPool();
 
         for (Task task : mTaskList) {
@@ -80,5 +100,6 @@ class Wave {
                 LogImpl.w(TAG, "Wave " + mSequence + "await interrupted. " + e.getMessage());
             }
         }
+        mStatus = Status.STATUS_DONE;
     }
 }
