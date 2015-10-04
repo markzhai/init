@@ -1,9 +1,7 @@
 # Init
-Init helps Android apps schedule initialization of application, with type, priority and
-multi-process, tidy magic code for every process, and improves efficiency of application start.
+Init helps Android apps schedule initialization of application, with type, priority and multi-process, tidy magic code for every process, and improves efficiency of application start.
 
-It is originally designed for application initialization, but not confined to that, it can be
-applied to any complex initialization procedure.
+It is originally designed for application initialization, but not confined to that, it can be applied to any complex initialization procedure.
 
 [For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md)
 
@@ -129,9 +127,7 @@ public class ProcessInit {
 }
 ```
 
-You see how complicated the initialization can be when the application grows, some operation should
-be after the other, and some can be done parallel, and some... Then we need to change the implementation
-of every init, to make some asynchronous, which makes code dirty and hard to understand.
+You see how complicated the initialization can be when the application grows, some operation should be after the other, and some can be done parallel, and some... Then we need to change the implementation of every init, to make some asynchronous, which makes code dirty and hard to understand.
 
 How to make it simpler? I came up with this library.
 
@@ -141,11 +137,9 @@ The initialization procedure is abstracted to flow, wave and task.
 
 ![flow](art/flow.png "how it works")
 
-Flow is a coarse-grained concept, normally we have only one flow, but under certain condition, we 
-may have several flow like patch flow, broadcast flow, etc.
+Flow is a coarse-grained concept, normally we have only one flow, but under certain condition, we may have several flow like patch flow, fake UI flow(to make user feel faster), broadcast flow, etc.
 
-Each wave can be started only when all blocked task in last wave finished, and all tasks belongs to
-the wave will started at the same time(if no delay set).
+Each wave can be started only when all blocked task in last wave finished, and all tasks belongs tothe wave will started at the same time(if no delay set).
 
 As for task, they can be divided into two types
  1. Blocked task, blue tasks in the picture.
