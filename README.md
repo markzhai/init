@@ -43,10 +43,18 @@ public class DemoApplication extends Application {
             }
         };
 
-        // Create more tasks named task3, task4, etc.
-        
+        // Create more tasks named task3, task4, task5, etc.
+        ...
+
+        // This is like the two red tasks in the flow picture, task5 depends on task4.
+        task5.setParentTask(task4);
+
         Flow flow = new Flow("flow");
-        flow.addTask(1, task1).addTask(1, task2).addTask(2, task3).addTask(2, task4);
+        flow.addTask(1, task1)
+                .addTask(1, task2)
+                .addTask(2, task3)
+                .addTask(2, task4)
+                .addTask(3, task5);
 
         Init.start(flow);
     }
@@ -56,7 +64,7 @@ See demo project for more details.
 
 
 # Why this
-Imagine how we initialize a large application like Alipay, QQ, Wechat, etc, we will face sth like:
+Imagine how we initialize a large application like Facebook, QQ, Wechat, etc, we will face sth like:
 
 ```java
 public class XXXApplication {

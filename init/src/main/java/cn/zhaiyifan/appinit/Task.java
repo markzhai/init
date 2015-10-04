@@ -15,6 +15,8 @@ public abstract class Task implements Runnable {
     private boolean mIsBlocked = true;
     private long mDelay = 0;
     private int mStatus = Status.STATUS_PENDING_START;
+    private Task mParentTask;
+    private Task mChildTask;
 
     /**
      * Constructor
@@ -72,6 +74,15 @@ public abstract class Task implements Runnable {
                 LogImpl.w(TAG, getName() + ": " + e.getMessage());
             }
         }
+        if (mParentTask != null) {
+            synchronized (this) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    LogImpl.w(TAG, getName() + ": " + e.getMessage());
+                }
+            }
+        }
         mStatus = Status.STATUS_EXECUTING;
 
         long startTime = System.currentTimeMillis();
@@ -83,6 +94,11 @@ public abstract class Task implements Runnable {
 
         if (mDoneSignal != null) {
             mDoneSignal.countDown();
+        }
+        if (mChildTask != null) {
+            synchronized (mChildTask) {
+                mChildTask.notify();
+            }
         }
         mStatus = Status.STATUS_DONE;
     }
@@ -106,6 +122,20 @@ public abstract class Task implements Runnable {
      */
     public void setDoneSignal(CountDownLatch doneSignal) {
         this.mDoneSignal = doneSignal;
+    }
+
+    /**
+     * Set parent task which blocks this task until it finished.
+     *
+     * @param task parent task
+     */
+    public void setParentTask(Task task) {
+        mParentTask = task;
+        task.setChildTask(this);
+    }
+
+    void setChildTask(Task task) {
+        mChildTask = task;
     }
 
     /**

@@ -68,11 +68,24 @@ public class DemoApplication extends Application {
             }
         };
 
+        Task task5 = new Task("task5", false) {
+            @Override
+            protected void start() {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        task5.setParentTask(task4);
+
         Flow flow = new Flow("flow");
         flow.addTask(1, task1)
                 .addTask(1, task2)
                 .addTask(2, task3)
-                .addTask(2, task4);
+                .addTask(2, task4)
+                .addTask(3, task5);
 
         Init.start(flow);
     }
