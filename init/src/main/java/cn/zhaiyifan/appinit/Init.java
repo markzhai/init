@@ -4,12 +4,15 @@ import android.content.Context;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * <p>Entry to add, start and manage init flow.</p>
  * Created by mark.zhai on 2015/10/2.
  */
 public class Init {
+    private static final int THREAD_POOL_SIZE = 8;
 
     private static Map<String, Flow> sFlowMap = new HashMap<>();
     private static Context sContext;
@@ -85,5 +88,9 @@ public class Init {
     public static int getFlowStatus(String flowName) {
         Flow flow = sFlowMap.get(flowName);
         return flow != null ? flow.getFlowStatus() : Status.STATUS_UNKNOWN;
+    }
+
+    public static ExecutorService getThreadPool() {
+        return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
     }
 }

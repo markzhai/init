@@ -73,7 +73,7 @@ public class Wave {
     public void start() {
         mStatus = Status.STATUS_EXECUTING;
         List<Task> blockTaskList = new LinkedList<>();
-        ExecutorService threadPool = Executors.newCachedThreadPool();
+        ExecutorService threadPool = Init.getThreadPool();
 
         for (Task task : mTaskList) {
             if (task.runOnProcess(mProcessName)) {

@@ -80,7 +80,7 @@ public class Flow {
 
         long startTime = System.currentTimeMillis();
 
-        ExecutorService threadPool = Executors.newCachedThreadPool();
+        ExecutorService threadPool = Init.getThreadPool();
 
         Callable<Boolean> flowTask = new Callable<Boolean>() {
             @Override
