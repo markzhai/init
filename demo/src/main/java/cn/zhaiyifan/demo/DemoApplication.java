@@ -74,7 +74,6 @@ public class DemoApplication extends Application {
                 .addTask(2, task3)
                 .addTask(2, task4);
 
-        Init.addFlow(flow);
         Init.start(flow);
     }
 }
