@@ -15,6 +15,8 @@ public abstract class Task implements Runnable {
     private boolean mIsBlocked = true;
     private long mDelay = 0;
     private int mStatus = Status.STATUS_PENDING_START;
+
+    // for asynchronous task chain
     private Task mParentTask;
     private Task mChildTask;
 
