@@ -6,6 +6,23 @@ package cn.zhaiyifan.appinit;
  * Created by mark.zhai on 15/10/3.
  */
 public interface ILog {
-    void info(String tag, String message);
-    void warn(String tag, String message);
+
+    /**
+     * Send an information level log message, used by time-related log.
+     *
+     * @param tag Used to identify the source of a log message.  It usually identifies
+     *            the class or activity where the log call occurs.
+     * @param msg The message you would like logged.
+     */
+    void info(String tag, String msg);
+
+
+    /**
+     * Send an warning level log message, used by exception-related log.
+     *
+     * @param tag Used to identify the source of a log message.  It usually identifies
+     *            the class or activity where the log call occurs.
+     * @param msg The message you would like logged.
+     */
+    void warn(String tag, String msg);
 }

@@ -1,4 +1,4 @@
-# Init
+# Init [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init)
 Init helps Android apps schedule initialization of application, with type, priority and multi-process, tidy magic code for every process, and improves efficiency of application start.
 
 It is originally designed for application initialization, but not confined to that, it can be applied to any complex initialization procedure.
@@ -9,7 +9,7 @@ It is originally designed for application initialization, but not confined to th
 
 ```gradle
 dependencies {
-    compile 'cn.zhaiyifan:init:1.0.0'
+    compile 'cn.zhaiyifan:init:1.0.1'
 }
 ```
 

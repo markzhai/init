@@ -7,7 +7,7 @@ Init帮助Android应用调度初始化流程，囊括类型、优先级、多进
 
 ```gradle
 dependencies {
-    compile 'cn.zhaiyifan:init:1.0.0'
+    compile 'cn.zhaiyifan:init:1.0.1'
 }
 ```
 
