@@ -26,6 +26,7 @@ public class Flow {
 
     private String mName;
     private long mTimeout = DEFAULT_FLOW_TIMEOUT;
+    private boolean mCancel = false;
 
     /**
      * Constructor
@@ -86,6 +87,9 @@ public class Flow {
             public Boolean call() throws Exception {
 
                 for (int i = 0, size = mWaveArray.size(); i < size; i++) {
+                    if (mCancel) {
+                        return false;
+                    }
                     Wave wave = mWaveArray.valueAt(i);
                     wave.start();
                 }
@@ -105,6 +109,13 @@ public class Flow {
         LogImpl.i(TAG, getName() + " runs " + (endTime - startTime));
 
         mFlowStatus = Status.STATUS_EXECUTING;
+    }
+
+    /**
+     * cannot guarantee immediately cancel
+     */
+    public void cancel() {
+        mCancel = true;
     }
 
     /**

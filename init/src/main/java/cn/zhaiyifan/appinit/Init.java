@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class Init {
 
-    private static HashMap<String, Flow> sFlowMap = new HashMap<>();
+    private static Map<String, Flow> sFlowMap = new HashMap<>();
     private static Context sContext;
 
     public static void init(Context context) {
@@ -64,12 +64,15 @@ public class Init {
     }
 
     /**
-     * Not quite sure when we need this...
+     * Cancel the flow.
      *
      * @param flowName flow key, should be unique for each flow.
      */
     public static void cancel(String flowName) {
-
+        Flow flow = sFlowMap.get(flowName);
+        if (flow != null) {
+            flow.cancel();
+        }
     }
 
     /**
