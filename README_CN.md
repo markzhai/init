@@ -1,5 +1,5 @@
 # Init [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init)
-Init帮助Android应用调度初始化流程，囊括类型、优先级、多进程，清理原来为每个进程判断是否要执行的神奇代码逻辑（你应该知道每个进程），提高应用启动效率。
+Init帮助Android应用调度初始化流程，处理类型、优先级、多进程（比如每个进程都会执行application的onCreate），任务依赖，提高应用启动效率。
 
 尽管Init设计的初衷是为了应用(application)初始化，但并不局限于此，它可以于应用在任何复杂的初始化流程。
 
