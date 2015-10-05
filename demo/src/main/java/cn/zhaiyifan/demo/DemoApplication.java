@@ -2,9 +2,9 @@ package cn.zhaiyifan.demo;
 
 import android.app.Application;
 
-import cn.zhaiyifan.appinit.Init;
-import cn.zhaiyifan.appinit.Flow;
-import cn.zhaiyifan.appinit.Task;
+import cn.zhaiyifan.init.Init;
+import cn.zhaiyifan.init.Flow;
+import cn.zhaiyifan.init.Task;
 
 public class DemoApplication extends Application {
 

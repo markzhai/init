@@ -1,4 +1,4 @@
-package cn.zhaiyifan.appinit;
+package cn.zhaiyifan.init;
 
 /**
  * <h1>Status of flow.</h1>

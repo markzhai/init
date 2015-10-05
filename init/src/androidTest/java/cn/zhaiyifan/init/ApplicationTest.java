@@ -1,4 +1,4 @@
-package cn.zhaiyifan.appinit;
+package cn.zhaiyifan.init;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

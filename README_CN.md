@@ -5,6 +5,22 @@ Init帮助Android应用调度初始化流程，囊括类型、优先级、多进
 
 Init不依赖于任何第三方库，使用Java concurrent并部分依赖于Android SDK(Context, Log)，所以理论上也可以在简单修改后直接用于Java工程。
 
+# How
+
+初始化流程被抽象为flow、wave和task。
+
+![flow](art/flow.png "how it works")
+
+flow是一个粗粒度概念，通常一个应用只有一个flow，但某些情况下我们可能拥有多个flow，像是patch flow，broadcast flow，fake UI flow等等，可以把它们都交给Init处理。
+
+每个wave只有在上一wave的所有阻塞task完成后才能开始，而所有属于该wave的task会一起开始执行（除非被赋予了delay）。
+
+至于task，在本库中属于原子性操作，他们可以被分为2大类型
+ 1. 阻塞task，即图中的蓝色任务。
+ 2. 异步task，又可以被分为
+- 完全异步或者横跨若干个wave后才需要阻塞，像图中的绿色task。
+- 异步链，像图中的红色task。
+
 # 使用
 
 ```gradle
@@ -87,7 +103,7 @@ flow.getTaskStatus(taskName)
 // 设置超时限制
 flow.setTimeout(5000)
 
-etc
+等等
 ```
 
 更多详情请见demo工程。
@@ -148,22 +164,6 @@ public class ProcessInit {
 你看到了当一个应用越来越大以后初始化能是一件多么复杂的事情，有些操作必须在另一个之后，而又有一些可以并行执行，又有的操作又需要在一个异步操作完成后才能执行......于是我们就得把每个独立的操作进行修改，有的改成异步，有的则阻塞在另一个操作后，使得代码杂乱且难以维护。
 
 怎么可以使它变得简单呢？Init就是来帮助你做这个事的。
-
-# How
-
-初始化流程被抽象为flow、wave和task。
-
-![flow](art/flow.png "how it works")
-
-flow是一个粗粒度概念，通常一个应用只有一个flow，但某些情况下我们可能拥有多个flow，像是patch flow，broadcast flow，fake UI flow等等，可以把它们都交给Init处理。
-
-每个wave只有在上一wave的所有阻塞task完成后才能开始，而所有属于该wave的task会一起开始执行（除非被赋予了delay）。
-
-至于task，在本库中属于原子性操作，他们可以被分为2大类型
- 1. 阻塞task，即图中的蓝色任务。
- 2. 异步task，又可以被分为
-- 完全异步或者横跨若干个wave后才需要阻塞，像图中的绿色task。
-- 异步链，像图中的红色task。
 
 # 路线图
 - 1.0 *10月 - 一个实现上述概念的可运行库* 已完成

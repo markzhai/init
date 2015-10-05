@@ -1,6 +1,4 @@
-package cn.zhaiyifan.appinit;
-
-import android.content.Context;
+package cn.zhaiyifan.init;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,26 +13,14 @@ public class Init {
     private static final int DEFAULT_THREAD_POOL_SIZE = 8;
 
     private static Map<String, Flow> sFlowMap = new HashMap<>();
-    private static Context sContext;
     private static int mThreadPoolSize = DEFAULT_THREAD_POOL_SIZE;
-
-    /**
-     * Init with context.
-     *
-     * @param context application context
-     */
-    public static void init(Context context) {
-        sContext = context;
-    }
 
     /**
      * Init with context and log class.
      *
-     * @param context  application context
      * @param logProxy log class implements {@link ILog}
      */
-    public static void init(Context context, ILog logProxy) {
-        sContext = context;
+    public static void init(ILog logProxy) {
         LogImpl.setLogProxy(logProxy);
     }
 
@@ -44,15 +30,6 @@ public class Init {
 
     public static void addFlow(Map<String, Flow> flowMap) {
         sFlowMap.putAll(flowMap);
-    }
-
-    /**
-     * Get application context for process information, package usage.
-     *
-     * @return application context
-     */
-    public static Context getContext() {
-        return sContext;
     }
 
     /**

@@ -1,6 +1,4 @@
-package cn.zhaiyifan.appinit;
-
-import android.util.Log;
+package cn.zhaiyifan.init;
 
 public class LogImpl implements ILog {
     private static ILog mLogProxy = null;
@@ -25,20 +23,20 @@ public class LogImpl implements ILog {
     }
 
     @Override
-    public void info(String tag, String message) {
+    public void info(String tag, String msg) {
         if (mLogProxy != null) {
-            mLogProxy.info(tag, message);
+            mLogProxy.info(tag, msg);
         } else {
-            Log.i(tag, message);
+            System.out.println(tag + ": " + msg);
         }
     }
 
     @Override
-    public void warn(String tag, String message) {
+    public void warn(String tag, String msg) {
         if (mLogProxy != null) {
-            mLogProxy.warn(tag, message);
+            mLogProxy.warn(tag, msg);
         } else {
-            Log.w(tag, message);
+            System.out.println(tag + ": " + msg);
         }
     }
 }

@@ -1,4 +1,4 @@
-package cn.zhaiyifan.appinit;
+package cn.zhaiyifan.init;
 
 /**
  * <h1>Log interface for application to implement so that the library can use application's custom

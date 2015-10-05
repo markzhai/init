@@ -7,6 +7,22 @@ The library does not depend on any third-party library, it depends on Android in
 
 [For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md)
 
+# How
+
+The initialization procedure is abstracted to flow, wave and task.
+
+![flow](art/flow.png "how it works")
+
+Flow is a coarse-grained concept, normally we have only one flow, but under certain condition, we may have several flow like patch flow, fake UI flow(to make user feel faster), broadcast flow, etc.
+
+Each wave can be started only when all blocked task in last wave finished, and all tasks belongs tothe wave will started at the same time(if no delay set).
+
+As for task, they can be divided into two types
+ 1. Blocked task, blue tasks in the picture.
+ 2. Asynchronous task, can be
+- completely asynchronous or across several waves like the green task.
+- asynchronous task chain, like the two red tasks.
+
 # Usage
 
 ```gradle
@@ -96,9 +112,9 @@ Init.getFlowStatus(...)
 flow.getTaskStatus(taskName)
 
 // set timeout, may not be useful for application init, but can be used for other init operation
-flow.setTimeout
+flow.setTimeout(5000)
 
-etc
+etc.
 ```
 
 # Why this
@@ -157,22 +173,6 @@ public class ProcessInit {
 You see how complicated the initialization can be when the application grows, some operation should be after the other, and some can be done parallel, and some... Then we need to change the implementation of every init, to make some asynchronous, which makes code dirty and hard to understand.
 
 How to make it simpler? I came up with this library.
-
-# How
-
-The initialization procedure is abstracted to flow, wave and task.
-
-![flow](art/flow.png "how it works")
-
-Flow is a coarse-grained concept, normally we have only one flow, but under certain condition, we may have several flow like patch flow, fake UI flow(to make user feel faster), broadcast flow, etc.
-
-Each wave can be started only when all blocked task in last wave finished, and all tasks belongs tothe wave will started at the same time(if no delay set).
-
-As for task, they can be divided into two types
- 1. Blocked task, blue tasks in the picture.
- 2. Asynchronous task, can be
-- completely asynchronous or across several waves like the green task.
-- asynchronous task chain, like the two red tasks.
 
 # Roadmap
 - 1.0 *October - A workable solution to principles mentioned above* DONE
