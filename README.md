@@ -1,5 +1,5 @@
 # Init [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init)
-Init helps Android apps schedule initialization of application, with type, priority and multi-process (you know that every process will run application's onCreate), tidy magic code for every process, and improves efficiency of application start.
+Init helps Android apps schedule initialization with type, priority and multi-process (you know that every process will run application's onCreate), improves efficiency of initialization.
 
 It is originally designed for application initialization, but not confined to that, it can be applied to any complex initialization procedure.
 
