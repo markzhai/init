@@ -38,12 +38,38 @@ public class Init {
         LogImpl.setLogProxy(logProxy);
     }
 
+    /**
+     * Add flow to let Init manage.
+     *
+     * @param flow flow which unique name
+     */
     public static void addFlow(Flow flow) {
         sFlowMap.put(flow.getName(), flow);
     }
 
+    /**
+     * Add flow map to let Init manage.
+     *
+     * @param flowMap map which contains flow-name to flow mapping
+     */
     public static void addFlow(Map<String, Flow> flowMap) {
         sFlowMap.putAll(flowMap);
+    }
+
+    /**
+     * Remove flow from Init.
+     *
+     * @param flowName flow name
+     */
+    public static void removeFlow(String flowName) {
+        sFlowMap.remove(flowName);
+    }
+
+    /**
+     * Clear flow map.
+     */
+    public static void clearFlow() {
+        sFlowMap.clear();
     }
 
     /**
@@ -78,6 +104,19 @@ public class Init {
         Flow flow = sFlowMap.get(flowName);
         if (flow != null) {
             flow.start();
+        }
+    }
+
+    /**
+     * start flow and remove from Init management.
+     *
+     * @param flowName flow key, should be unique for each flow.
+     */
+    public static void startAndRemove(String flowName) {
+        Flow flow = sFlowMap.get(flowName);
+        if (flow != null) {
+            flow.start();
+            sFlowMap.remove(flowName);
         }
     }
 
