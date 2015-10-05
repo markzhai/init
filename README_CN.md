@@ -1,7 +1,9 @@
-# Init
-Init帮助Android应用调度初始化流程，囊括类型、优先级、多进程，清理原来为每个进程判断是否要执行的神奇代码逻辑，提高应用启动效率。
+# Init [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init)
+Init帮助Android应用调度初始化流程，囊括类型、优先级、多进程，清理原来为每个进程判断是否要执行的神奇代码逻辑（你应该知道每个进程），提高应用启动效率。
 
 尽管Init设计的初衷是为了应用(application)初始化，但并不局限于此，它可以于应用在任何复杂的初始化流程。
+
+Init不依赖于任何第三方库，使用Java concurrent并部分依赖于Android SDK(Context, Log)，所以理论上也可以在简单修改后直接用于Java工程。
 
 # 使用
 
@@ -29,6 +31,12 @@ public class DemoApplication extends Application {
             @Override
             protected void start() {
                 doSomeThing();
+            }
+
+            // 仅在返回true的时候才会在对应进程执行
+            @Override
+            public boolean runOnProcess(String processName) {
+                return processName.equals("cn.zhaiyifan.demo");
             }
         };
         
@@ -60,6 +68,26 @@ public class DemoApplication extends Application {
 10-04 18:53:55.592 646-646/cn.zhaiyifan.init I/Flow: flow runs 1307
 10-04 18:53:55.990 646-740/cn.zhaiyifan.init I/Task: task4 runs 700
 10-04 18:53:56.191 646-783/cn.zhaiyifan.init I/Task: task5 runs 200
+```
+
+Useful api: 
+```java
+// 设置线程池大小
+Init.setThreadPoolSize(...)
+
+// 取消一个已经开始的flow
+Init.cancel(...)
+
+// 获得flow状态
+Init.getFlowStatus(...)
+
+// 获得特定的task状态
+flow.getTaskStatus(taskName)
+
+// 设置超时限制
+flow.setTimeout(5000)
+
+etc
 ```
 
 更多详情请见demo工程。

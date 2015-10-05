@@ -1,7 +1,9 @@
 # Init [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init)
-Init helps Android apps schedule initialization of application, with type, priority and multi-process, tidy magic code for every process, and improves efficiency of application start.
+Init helps Android apps schedule initialization of application, with type, priority and multi-process (you know that every process will run application's onCreate), tidy magic code for every process, and improves efficiency of application start.
 
 It is originally designed for application initialization, but not confined to that, it can be applied to any complex initialization procedure.
+
+The library does not depend on any third-party library, it depends on Android in the case of Context and Log, and mostly depends on Java concurrent.
 
 [For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md)
 
@@ -29,6 +31,12 @@ public class DemoApplication extends Application {
             @Override
             protected void start() {
                 doSomeThing();
+            }
+
+            // when runs on process which makes the method return true
+            @Override
+            public boolean runOnProcess(String processName) {
+                return processName.equals("cn.zhaiyifan.demo");
             }
         };
         
@@ -73,6 +81,25 @@ Let's have a look at log, we can see that the initialization which may take up t
 
 See demo project for more details.
 
+Useful api: 
+```java
+// to set thread pool size
+Init.setThreadPoolSize(...)
+
+// cancel a started flow
+Init.cancel(...)
+
+// get flow status
+Init.getFlowStatus(...)
+
+// get specific task status
+flow.getTaskStatus(taskName)
+
+// set timeout, may not be useful for application init, but can be used for other init operation
+flow.setTimeout
+
+etc
+```
 
 # Why this
 Imagine how we initialize a large application like Facebook, QQ, Wechat, etc, we will face sth like:
