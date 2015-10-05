@@ -14,6 +14,7 @@ public class DemoApplication extends Application {
 
         // The library needs application context to get process information.
         Init.init(this);
+        // Init.init(this, logProxy) enables custom log component
 
         Task task1 = new Task("task1") {
 
@@ -32,7 +33,7 @@ public class DemoApplication extends Application {
             }
         };
 
-        Task task2 = new Task("task2") {
+        Task task2 = new Task("task2", false, 5) {
 
             @Override
             protected void start() {
@@ -44,7 +45,7 @@ public class DemoApplication extends Application {
             }
         };
 
-        Task task3 = new Task("task3") {
+        Task task3 = new Task("task3", true) {
 
             @Override
             protected void start() {

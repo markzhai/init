@@ -7,6 +7,8 @@ The library does not depend on any third-party library, it depends on Android in
 
 It's named Init for the sake of its original inspiration.
 
+See [Wiki](https://github.com/markzhai/init/wiki) for detailed usage.
+
 [For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md)
 
 # How
