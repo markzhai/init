@@ -1,15 +1,17 @@
 # Init [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/cn.zhaiyifan/init)
-Init helps Android apps schedule initialization with type, priority and multi-process (you know that every process will run application's onCreate), improves efficiency of initialization.
+Init helps app schedule complex task-group like initialization with type, priority and multi-process (you know that every process will run application's onCreate), thus improves efficiency.
 
-It is originally designed for application initialization, but not confined to that, it can be applied to any complex initialization procedure.
+It is originally designed for application initialization, but not confined to that, and can be applied to any complex task-group(like initialization procedure).
 
 The library does not depend on any third-party library, it depends on Android in the case of Context and Log, and mostly depends on Java concurrent.
+
+It's named Init for the sake of its original inspiration.
 
 [For Chinese 中文戳这里](https://github.com/markzhai/init/blob/master/README_CN.md)
 
 # How
 
-The initialization procedure is abstracted to flow, wave and task.
+The task-group(like initialization procedure) can be abstracted to flow, wave and task.
 
 ![flow](art/flow.png "how it works")
 
