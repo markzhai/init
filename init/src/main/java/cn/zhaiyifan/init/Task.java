@@ -79,7 +79,9 @@ public abstract class Task implements Runnable {
         if (mParentTask != null) {
             synchronized (this) {
                 try {
-                    wait();
+                    if(mParentTask.getStatus() != Status.STATUS_DONE) {
+                        wait();
+                    }
                 } catch (InterruptedException e) {
                     LogImpl.w(TAG, getName() + ": " + e.getMessage());
                 }
