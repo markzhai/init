@@ -31,6 +31,10 @@ public class DemoApplication extends Application {
             public boolean runOnProcess(String processName) {
                 return processName.equals("cn.zhaiyifan.init");
             }
+
+            @Override
+            protected void onResult() {
+            }
         };
 
         Task task2 = new Task("task2", false, 5) {
@@ -42,6 +46,9 @@ public class DemoApplication extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            @Override
+            protected void onResult() {
             }
         };
 
@@ -55,6 +62,9 @@ public class DemoApplication extends Application {
                     e.printStackTrace();
                 }
             }
+            @Override
+            protected void onResult() {
+            }
         };
 
         Task task4 = new Task("task4", false) {
@@ -67,6 +77,9 @@ public class DemoApplication extends Application {
                     e.printStackTrace();
                 }
             }
+            @Override
+            protected void onResult() {
+            }
         };
 
         Task task5 = new Task("task5", false) {
@@ -77,6 +90,9 @@ public class DemoApplication extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            @Override
+            protected void onResult() {
             }
         };
         task5.setParentTask(task4);
