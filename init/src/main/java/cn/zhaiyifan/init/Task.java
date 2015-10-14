@@ -205,8 +205,14 @@ public abstract class Task implements Runnable {
         }
         @Override
         public void handleMessage(Message msg) {
-            Task task = (Task)msg.obj;
-            task.onResult();
+            switch (msg.what) {
+                case MESSAGE_POST_RUSULT:
+                    Task task = (Task) msg.obj;
+                    task.onResult();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
