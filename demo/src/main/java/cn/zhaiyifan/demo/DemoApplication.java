@@ -47,9 +47,6 @@ public class DemoApplication extends Application {
                     e.printStackTrace();
                 }
             }
-            @Override
-            protected void onResult() {
-            }
         };
 
         Task task3 = new Task("task3", true) {
@@ -61,9 +58,6 @@ public class DemoApplication extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            @Override
-            protected void onResult() {
             }
         };
 
@@ -77,9 +71,6 @@ public class DemoApplication extends Application {
                     e.printStackTrace();
                 }
             }
-            @Override
-            protected void onResult() {
-            }
         };
 
         Task task5 = new Task("task5", false) {
@@ -90,9 +81,6 @@ public class DemoApplication extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            @Override
-            protected void onResult() {
             }
         };
         task5.setParentTask(task4);

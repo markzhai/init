@@ -115,7 +115,7 @@ public abstract class Task implements Runnable {
     /**
      * This method is invoked by ui thread when the task finish.
      */
-    protected abstract void onResult();
+    protected void onResult(){};
     /**
      * Run task.
      */
