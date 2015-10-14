@@ -1,5 +1,8 @@
 package cn.zhaiyifan.init;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -15,7 +18,8 @@ public abstract class Task implements Runnable {
     private boolean mIsBlocked = true;
     private long mDelay = 0;
     private int mStatus = Status.STATUS_PENDING_START;
-
+    private static InternalHandler sHandler;
+    private static final int MESSAGE_POST_RUSULT = 0x1;
     // for asynchronous task chain
     private Task mParentTask;
     private Task mChildTask;
@@ -92,6 +96,7 @@ public abstract class Task implements Runnable {
         long startTime = System.currentTimeMillis();
 
         start();
+        getHandler().obtainMessage(MESSAGE_POST_RUSULT, this).sendToTarget();
 
         long endTime = System.currentTimeMillis();
         LogImpl.i(TAG, getName() + " runs " + (endTime - startTime));
@@ -107,6 +112,10 @@ public abstract class Task implements Runnable {
         mStatus = Status.STATUS_DONE;
     }
 
+    /**
+     * This method is invoked by ui thread when the task finish.
+     */
+    protected void onResult(){};
     /**
      * Run task.
      */
@@ -175,5 +184,35 @@ public abstract class Task implements Runnable {
      */
     public String getName() {
         return mTaskName;
+    }
+
+    /**
+     * Provide a public handler for all the task;
+     * @return a handler object
+     */
+    private static Handler getHandler() {
+        synchronized (Task.class) {
+            if (sHandler == null) {
+                sHandler = new InternalHandler();
+            }
+            return sHandler;
+        }
+    }
+
+    private static class InternalHandler extends Handler {
+        public InternalHandler() {
+            super(Looper.getMainLooper());
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MESSAGE_POST_RUSULT:
+                    Task task = (Task) msg.obj;
+                    task.onResult();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

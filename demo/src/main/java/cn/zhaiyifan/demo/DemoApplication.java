@@ -31,6 +31,10 @@ public class DemoApplication extends Application {
             public boolean runOnProcess(String processName) {
                 return processName.equals("cn.zhaiyifan.init");
             }
+
+            @Override
+            protected void onResult() {
+            }
         };
 
         Task task2 = new Task("task2", false, 5) {

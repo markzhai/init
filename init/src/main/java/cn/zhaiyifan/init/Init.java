@@ -18,6 +18,7 @@ public class Init {
     private static Context sContext;
     private static int mThreadPoolSize = DEFAULT_THREAD_POOL_SIZE;
 
+    private static ExecutorService mExecutorService;
     /**
      * Init with context.
      *
@@ -87,7 +88,10 @@ public class Init {
      * @param size thread pool size, value less or equal than 0 will produce a cached thread pool.
      */
     public static void setThreadPoolSize(int size) {
-        mThreadPoolSize = size;
+        if(mThreadPoolSize != size){
+            mThreadPoolSize = size;
+            createThreadPool();
+        }
     }
 
     public static Flow getFlow(String flowName) {
@@ -157,10 +161,20 @@ public class Init {
      * @return thread pool
      */
     public static ExecutorService getThreadPool() {
+        if(mExecutorService == null){
+            createThreadPool();
+        }
+        return mExecutorService;
+    }
+
+    /**
+     * create a thread pool.
+     */
+    public static void createThreadPool(){
         if (mThreadPoolSize <= 0) {
-            return Executors.newCachedThreadPool();
+            mExecutorService =  Executors.newCachedThreadPool();
         } else {
-            return Executors.newFixedThreadPool(mThreadPoolSize);
+            mExecutorService = Executors.newFixedThreadPool(mThreadPoolSize);
         }
     }
 }
