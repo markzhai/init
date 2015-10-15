@@ -170,11 +170,19 @@ public class Init {
     /**
      * create a thread pool.
      */
-    public static void createThreadPool(){
+    private static void createThreadPool(){
         if (mThreadPoolSize <= 0) {
             mExecutorService =  Executors.newCachedThreadPool();
         } else {
             mExecutorService = Executors.newFixedThreadPool(mThreadPoolSize);
         }
+    }
+
+    /**
+     * This executor will be shutdown if it is no longer referenced and has no threads.
+     *
+     */
+    public static void releaseThreadPool() {
+        mExecutorService = null;
     }
 }
